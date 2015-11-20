@@ -1,9 +1,12 @@
 package com.dam.salesianostriana.pmdm.proyectoappmessages.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +18,8 @@ import com.dam.salesianostriana.pmdm.proyectoappmessages.R;
 import com.dam.salesianostriana.pmdm.proyectoappmessages.adaptadores.DividerItemDecoration;
 import com.dam.salesianostriana.pmdm.proyectoappmessages.adaptadores.UsuariosAdapter;
 import com.dam.salesianostriana.pmdm.proyectoappmessages.pojo_listas.ItemUsuario;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -32,7 +37,6 @@ public class UsuariosFragment extends Fragment {
     public UsuariosFragment() {}
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,9 +51,24 @@ public class UsuariosFragment extends Fragment {
 
         usuarios = new ArrayList<ItemUsuario>();
 
-        usuarios.add(new ItemUsuario("Jesuli_de_oro_94"));
+        SharedPreferences prefs = getActivity().getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        JSONObject object;
+        Log.i("USUARIO CLAVE","USER: " + prefs.getString("clave", null));
+        /*try {
+            object = new JSONObject("http://miguelcr.hol.es/talkme/users?regId="+prefs.getString("clave",null));
+            Log.i("USUARIO CLAVE","TAMAÑO: " + object.getString("nickname"));
+
+           *//* for(int i=0; i<array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                String nick = obj.getString("nickname");
+                usuarios.add(new ItemUsuario(nick));
+            }*//*
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
         usuarios.add(new ItemUsuario("ToritoTriana"));
-        usuarios.add(new ItemUsuario("DonBosco36"));
         usuarios.add(new ItemUsuario("MiguelitoCampos"));
         usuarios.add(new ItemUsuario("Sacristisi"));
         usuarios.add(new ItemUsuario("Tifordi"));
@@ -58,10 +77,9 @@ public class UsuariosFragment extends Fragment {
         usuarios.add(new ItemUsuario("Sr. Zapatones"));
         usuarios.add(new ItemUsuario("Isco el Fanty"));
 
-
-
         mAdapter = new UsuariosAdapter(usuarios);
         mRecyclerView.setAdapter(mAdapter);
+
 
         return v;
     }
